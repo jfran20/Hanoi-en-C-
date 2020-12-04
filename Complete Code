@@ -1,0 +1,150 @@
+using System;
+using System.Linq;
+
+namespace Torres_de_Hanoi
+{
+    class Program
+    {
+        static void Main(string[] args) { Menu(); }
+
+
+
+        public static void Menu()
+        {
+            int opc;
+            Console.Clear();
+            // Aqui iria un titulo bien padre así tipo hanoi 
+            Console.WriteLine("Bienvenido a torres_de_hanoi.exe"); 
+            Console.WriteLine("1.- Instrucciones\t2.-Nueva Partida\t3.-Marcador\t4.-Salir");
+            opc = int.Parse(Console.ReadLine());
+
+            switch (opc){
+                case 1:
+                    try 
+                    {
+                        Instrucciones();
+                    }catch (Exception Ex) { Console.WriteLine("Oooops hubo un error " + Ex.Message); }
+                    break;
+                case 2:
+                    try
+                    {
+                        Console.WriteLine("¿Con cuántos discos quieres jugar? ");
+                        int discos = int.Parse(Console.ReadLine());
+                        Dibujar(Nuevo(discos), discos);
+
+                        
+                    }
+                    catch (Exception Ex) { Console.WriteLine("Oooops hubo un error " + Ex.Message); }
+                    break;
+                case 3:
+                    try
+                    {
+                        
+                    }
+                    catch (Exception Ex) { Console.WriteLine("Oooops hubo un error " + Ex.Message); }
+                    break;
+                case 4:
+                    try
+                    {
+                        Environment.Exit(0);
+                    }
+                    catch (Exception Ex) { Console.WriteLine("Oooops hubo un error " + Ex.Message); }
+                    break;
+            }
+
+        }
+        public static void Instrucciones()
+        {
+            //Podemos escribir todo aqui o escribir un .txt y que lo vaya leyendo 
+
+            Console.WriteLine("El juego consiste...");
+            Console.WriteLine("Presione cualquier tecla...");
+            Console.ReadLine();
+            Console.WriteLine("Eso seria todo");
+            Console.WriteLine("Presione cualquier tecla...");
+            Menu();
+        }
+
+        public static void Dibujar(int[,] H, int discos)
+        {
+            // Elementos Visulaes  
+            string pieza_1 = ("  1  ");
+            string pieza_2 = (" 222 ");
+            string pieza_3 = ("33333");
+            string suelo =   ("---|-------|-------|---");
+                                                                           
+            string col_2_sep = "\t";
+            string col_3_sep = "\t\t";
+
+            // En primera columna
+            Console.WriteLine(pieza_1);
+            Console.WriteLine(pieza_2);
+            Console.WriteLine(pieza_3);
+            Console.WriteLine(suelo);
+
+            // En segunda columna
+            Console.WriteLine(col_2_sep + pieza_1);
+            Console.WriteLine(col_2_sep + pieza_2);
+            Console.WriteLine(col_2_sep + pieza_3);
+            Console.WriteLine(suelo);
+
+            // En tercera columna
+            Console.WriteLine(col_3_sep + pieza_1);
+            Console.WriteLine(col_3_sep + pieza_2);
+            Console.WriteLine(col_3_sep + pieza_3);
+            Console.WriteLine(suelo);
+            for(int j = 0; j < discos; j++)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (H[1, i] != 0)
+                    {
+                        for (int k = 0; k < i; k++)
+                        {
+                            Console.Write("");
+                        }
+                        string.Concat(Enumerable.Repeat(i, 2 * (i + 1) - 1));
+                    }
+                }
+            }
+
+
+
+             //Filas x Columnas
+
+        }
+
+        public static int[,] Nuevo(int discos)
+        {
+            int[,] H = new int[discos,3];
+
+            for (int j = 0; j < 3; j++)
+            {
+                for (int i = 0; i < discos; i++)
+                {
+                   if(j == 0)
+                    {
+                        H[i, j] = i + 1;
+                    }
+                    else { H[i, j] = 0; }
+                }
+            }
+
+            /// Parte de prueba remover despues
+            for (int i = 0; i < discos; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    Console.Write(H[i, j]);
+                }
+                Console.WriteLine();
+            }
+            //////////////////////////////////
+            return (H);
+
+
+
+        }
+
+    }            
+}
