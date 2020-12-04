@@ -68,32 +68,17 @@ namespace Torres_de_Hanoi
         public static void Dibujar(int[,] H, int discos)
         {
             // Elementos Visulaes  
-            string pieza_1 = ("  1  ");
-            string pieza_2 = (" 222 ");
-            string pieza_3 = ("33333");
             string suelo =   ("---|-------|-------|---");
-                                                                           
-            string col_2_sep = "\t";
-            string col_3_sep = "\t\t";
+            /* En primera columna Apoyo Visual 
+            "  1  "
+            " 222 "
+            "33333"
+            "---|-------|-------|---"
+             */
 
-            // En primera columna
-            Console.WriteLine(pieza_1);
-            Console.WriteLine(pieza_2);
-            Console.WriteLine(pieza_3);
-            Console.WriteLine(suelo);
+            // Solo sirve para numeros de 1 digito 
 
-            // En segunda columna
-            Console.WriteLine(col_2_sep + pieza_1);
-            Console.WriteLine(col_2_sep + pieza_2);
-            Console.WriteLine(col_2_sep + pieza_3);
-            Console.WriteLine(suelo);
-
-            // En tercera columna
-            Console.WriteLine(col_3_sep + pieza_1);
-            Console.WriteLine(col_3_sep + pieza_2);
-            Console.WriteLine(col_3_sep + pieza_3);
-            Console.WriteLine(suelo);
-            for(int j = 0; j < discos; j++)
+            for (int j = 0; j < discos; j++)
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -101,16 +86,14 @@ namespace Torres_de_Hanoi
                     {
                         for (int k = 0; k < i; k++)
                         {
-                            Console.Write("");
+                            Console.Write("\t");
                         }
-                        string.Concat(Enumerable.Repeat(i, 2 * (i + 1) - 1));
+                        string pieza = string.Concat(Enumerable.Repeat(j + 1, 2 * (j + 1) - 1));
+                        Console.Write(pieza + "\n");
                     }
                 }
             }
-
-
-
-             //Filas x Columnas
+            Console.WriteLine(suelo);
 
         }
 
@@ -130,7 +113,7 @@ namespace Torres_de_Hanoi
                 }
             }
 
-            /// Parte de prueba remover despues
+            /* Parte de prueba remover despues
             for (int i = 0; i < discos; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -139,7 +122,7 @@ namespace Torres_de_Hanoi
                 }
                 Console.WriteLine();
             }
-            //////////////////////////////////
+            */
             return (H);
 
 
