@@ -129,5 +129,46 @@ namespace Torres_de_Hanoi
 
         }
 
+        public static int[,] Juego(int[,]H, int discos)
+        {
+            Console.WriteLine("Columna: ");
+            int C_orig = int.Parse(Console.ReadLine());
+            Console.WriteLine(" a: ");
+            int C_dest = int.Parse(Console.ReadLine());
+
+            // *** Logica del juego ***
+
+            for (int i = 0; i < discos; i++)                                            // Itera en todas las filas
+            {
+                if (H[i, C_orig] != 0)                                                  // Busca el Primer disco 
+                {
+                    for (int j = discos; j >= 0; j--)                                   // Itera en la columna destino de abajo hacia arriba
+                    {
+                        if (H[j, C_dest] == 0)                                          // Busca un espacio libre 
+                        {
+                            if(j<discos)                                                // Si no es el unico disco
+                            {
+                                if (H[i, C_orig] > H[j + 1, C_dest])                     // Compara con el de abajo 
+                                {
+                                    Console.WriteLine("Ese es un movimiento ilegal");   // Muestra si se puede
+                                }
+                                else                                                    // Realiza el cambio
+                                {
+                                    H[j, C_dest] = H[i, C_orig];
+                                    H[i, C_orig] = 0;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                else {Console.WriteLine("En esta columna no hay nada"); }               // Si no encuentra nada vuelve a llamarse
+                break;
+            }
+            // ** termina logica del juego ** 
+            return (H);
+        }
+        
+
     }            
 }
