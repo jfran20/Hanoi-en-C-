@@ -1,5 +1,5 @@
-﻿/*Jose Francisco Estañon Miranda 70243
-  Leslie Andrea Anguiano Reséndez 00000*/
+/*Jose Francisco Estañon Miranda 70243
+  Leslie Andrea Anguiano Reséndez 70930*/
 using System;
 using System.Linq;
 using System.IO;
@@ -8,17 +8,18 @@ namespace Torres_de_Hanoi
 {
     class Program
     {
-        static void Main(string[] args) {
-            Console.Write("\n\n\t\t\t\t\t\t¿Como te llamas?: ");
+        static void Main(string[] args)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("\n\n\t\t\t\t\t\t¡Hola! Para empezar a correr el programa necesitamos tu nombre: ");
             string usuario = Console.ReadLine();
 
-            Menu(usuario); }
-
-
+            Menu(usuario);
+        }
 
         public static void Menu(string usuario)
         {
-            if(File.Exists("marcador.txt") == false)
+            if (File.Exists("marcador.txt") == false)
             {
                 using (StreamWriter sw = File.AppendText("marcador.txt"))
                 {
@@ -27,7 +28,7 @@ namespace Torres_de_Hanoi
             }
 
             Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
 
             int opc = 2;
             Console.Clear();
@@ -40,18 +41,21 @@ namespace Torres_de_Hanoi
             Console.WriteLine("\t\t     MM      YA.   ,A9   MM       MM     YM.    , L.   I8     `Mb    MM  YM.    ,       MM      MM  8M   MM      MM    MM  YA.   ,A9    MM  ");
             Console.WriteLine("\t\t   .JMML.     `Ybmd9'  .JMML.   .JMML.    `Mbmmd' M9mmmP'      `Wbmd*MML. `Mbmmd'     .JMML.  .JMML.`Moo9 ^ Yo..JMML  JMML. `Ybmd9'   .JMML.");
 
-            Console.WriteLine("\n\t\t\t\t\t\t1.- Instrucciones\t2.-Nueva Partida\t3.-Marcador\t4.-Salir");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("\n\n\t\t\t\t\t\t1.- Instrucciones\t2.-Nueva Partida\t3.-Marcador\t4.-Salir");
             try
             {
                 opc = int.Parse(Console.ReadLine());
             }
             catch (Exception) { Menu(usuario); }
-            switch (opc){
+            switch (opc)
+            {
                 case 1:
-                    try 
+                    try
                     {
                         Instrucciones(usuario);
-                    }catch (Exception) { Menu(usuario); }
+                    }
+                    catch (Exception) { Menu(usuario); }
                     break;
 
                 case 2:
@@ -60,11 +64,19 @@ namespace Torres_de_Hanoi
                         Console.Write("\n\t\t\t\t\t\t\t\t\t¿Con cuántos discos quieres jugar?: ");
                         int discos = int.Parse(Console.ReadLine());
 
-                        if(discos == 0) { Console.WriteLine("\t\t\t\t\t\t\t\t\tReally?     -_- "); }
+                        if (discos == 0)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("\t\t\t\t\t\t\t\t\tReally?     -_- ");
+                            Console.ForegroundColor = ConsoleColor.Black;
+                        }
 
-                        while(discos > 20) { 
-                            Console.WriteLine("\t\t\t\t\t\t\t\t\tPor favor se razonable, esto dificultaria visualizarlo y ejecutarlo");
-                            Console.WriteLine("\t\t\t\t\t\t\t\t\tIntentalo denuevo: ");
+                        while (discos > 20)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("\t\t\t\t\t\t\t\t\tPor favor se razonable, esto dificultaría visualizarlo y ejecutarlo");
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.WriteLine("\t\t\t\t\t\t\t\t\tInténtalo de nuevo: ");
                             discos = int.Parse(Console.ReadLine());
                         }
 
@@ -76,17 +88,21 @@ namespace Torres_de_Hanoi
                         do
                         {
                             movimientos++;
-                            Partida = Juego(Partida, discos,movimientos);                 
+                            Partida = Juego(Partida, discos, movimientos);
                             ganar = Ganar(Partida, discos);
                         } while (ganar == false);
                         Felicidades(movimientos, discos, usuario);
 
                     }
-                    catch (Exception) {
-                        Console.WriteLine("\t\t\t\t\t\t\t\t\tVaya algo salio mal... De vuelta al Menu");
+                    catch (Exception)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("\t\t\t\t\t\t\t\t\tVaya algo salió mal... De vuelta al Menú");
+                        Console.ForegroundColor = ConsoleColor.Black;
                         Console.WriteLine("\t\t\t\t\t\t\t\t\tPresiona enter...");
                         Console.ReadLine();
-                        Menu(usuario); }
+                        Menu(usuario);
+                    }
                     break;
 
                 case 3:
@@ -108,30 +124,38 @@ namespace Torres_de_Hanoi
         }
         public static void Instrucciones(string usuario)
         {
-
-            Console.WriteLine("\n\t\t\t\t\t\t\t\t\tEl juego consiste en un número de discos perforados de radio creciente que se apilan \n\t\tinsertándose en uno de los tres postes fijados a un tablero. ");
-            Console.WriteLine("\n\t\t\t\t\t   1  ");
-            Console.WriteLine("\t\t\t\t\t  222 ");
-            Console.WriteLine("\t\t\t\t\t 33333");
-            Console.WriteLine("\t\t\t\t\t---|-------|-------|---");
-            Console.WriteLine("\n\t\t\t\t\t\t\t\t\tPresione enter...");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t¿EN QUÉ CONSISTE Y CÓMO JUGAR?");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("\n\t\t\t\t\tEl juego consiste en un número de discos perforados de radio creciente que se apilan insertándose  \n\t\t\t\t\ten uno de los tres postes fijados a un tablero. ");
+            Console.WriteLine("\n\t\t\t\t\t\t\t\t\t   1  ");
+            Console.WriteLine("\t\t\t\t\t\t\t\t\t  222 ");
+            Console.WriteLine("\t\t\t\t\t\t\t\t\t 33333");
+            Console.WriteLine("\t\t\t\t\t\t\t\t\t---|-------|-------|---");
+            Console.WriteLine("\n\t\t\t\t\t\t\t\t\t   Presione enter...");
             Console.ReadLine();
 
-            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\tEl objetivo del juego es trasladar la pila a otro de los postes siguiendo ciertas \n\t\treglas, como que NO SE PUEDE COLOCAR UN DISCO MÁS GRANDE ENCIMA DE UN DISCO MÁS PEQUEÑO. ");
-            Console.WriteLine("\nPresione enter...");
+            Console.WriteLine("\n\n\t\t\t\t\tEl objetivo del juego es trasladar la pila a otro de los postes siguiendo una sola regla: ");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("\n\n\t\t\t\t\t\t NO SE PUEDE COLOCAR UN DISCO MÁS GRANDE ENCIMA DE UN DISCO MÁS PEQUEÑO.");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("\n\t\t\t\t\t\t\t\t\t   Presione enter...");
             Console.ReadLine();
 
-            Console.WriteLine("\n\t\t\t\t\t\t\t\t\tEl juego te pedira primero la columna de origen y luego la columna de destino");
-            Console.WriteLine("\n\t\t\t\t\t\t\t\t\tPresione enter...");
+            Console.WriteLine("\n\t\t\t\t\t\tEl juego te pedirá primero la columna de origen y luego la columna de destino");
+            Console.WriteLine("\n\t\t\t\t\t\t\t\t\t   Presione enter...");
             Console.ReadLine();
 
-            Console.WriteLine("\n\t\t\t\t\t\t\t\t\tEso seria todo, ¿listo para jugar?");
-            Console.WriteLine("\n\t\t\t\t\t\t\t\t\tPresione enter...");
+            Console.WriteLine("\n\t\t\t\t\t\tEso sería todo, ¿listo para jugar?");
+            Console.WriteLine("\n\t\t\t\t\t\t\t\t\t   Presione enter...");
+            Console.ReadLine();
             Menu(usuario);
         }
         public static void Dibujar(int[,] H, int discos, int movimientos)
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("\n\t\t\t\t\t\t\t\t\tMovimientos: " + movimientos + "\n");
+            Console.ForegroundColor = ConsoleColor.Black;
             for (int j = 0; j < discos; j++)
             {
                 Console.Write("\t\t\t\t\t\t\t\t\t");
@@ -139,7 +163,7 @@ namespace Torres_de_Hanoi
                 {
                     if (H[j, i] != 0)
                     {
-                        for (int k = 0; k < (discos - H[j,i]); k++) { Console.Write(" "); } // Separacion izquierda
+                        for (int k = 0; k < (discos - H[j, i]); k++) { Console.Write(" "); } // Separacion izquierda
 
                         string pieza = string.Concat(Enumerable.Repeat(H[j, i], 2 * (H[j, i] + 1) - 1)); // Numeros
                         Console.Write(pieza);
@@ -156,17 +180,17 @@ namespace Torres_de_Hanoi
                 Console.Write("\n");
             }
             Console.Write("\t\t\t\t\t\t\t\t\t");
-            Console.Write(string.Concat(Enumerable.Repeat("-", 2 * (3*discos + 1) + 1)));
+            Console.Write(string.Concat(Enumerable.Repeat("-", 2 * (3 * discos + 1) + 1)));
         }
         public static int[,] Nuevo(int discos)
         {
-            int[,] H = new int[discos,3];
+            int[,] H = new int[discos, 3];
 
             for (int j = 0; j < 3; j++)
             {
                 for (int i = 0; i < discos; i++)
                 {
-                   if(j == 0)
+                    if (j == 0)
                     {
                         H[i, j] = i + 1;
                     }
@@ -175,7 +199,7 @@ namespace Torres_de_Hanoi
             }
             return (H);
         }
-        public static int[,] Juego(int[,]H, int discos, int movimientos)
+        public static int[,] Juego(int[,] H, int discos, int movimientos)
         {
             Console.Write("\n\t\t\t\t\t\t\t\t\tColumna de origen: ");
             int C_orig = int.Parse(Console.ReadLine()) - 1;
@@ -198,7 +222,9 @@ namespace Torres_de_Hanoi
                                 {
                                     if (H[i, C_orig] > H[j + 1, C_dest])                    // Compara con el de abajo 
                                     {
+                                        Console.ForegroundColor = ConsoleColor.DarkRed;
                                         Console.WriteLine("\t\t\t\t\t\t\t\t\tEse es un movimiento ilegal");   // Muestra si se puede *Evitar que cuente
+                                        Console.ForegroundColor = ConsoleColor.Black;
                                         break;
                                     }
                                     else                                                    // Realiza el cambio
@@ -220,22 +246,28 @@ namespace Torres_de_Hanoi
                     }
                     else if (i == (discos - 1)) // Si no encuentra nada sale *Evitar que cuente*
                     {
-                        Console.WriteLine("\t\t\t\t\t\t\t\t\tEn esa columna no hay nada! ");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("\t\t\t\t\t\t\t\t\t¡En esa columna no hay nada! ");
+                        Console.ForegroundColor = ConsoleColor.Black;
                         break;
                     }
                 }
             }
-            else { Console.WriteLine("\t\t\t\t\t\t\t\t\t No tiene mucho sentido mover a la misma columna");}
+            else {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("\t\t\t\t\t\t\t\t\t No tiene mucho sentido mover a la misma columna...");
+                Console.ForegroundColor = ConsoleColor.Black;
+            }
             // ** termina logica del juego ** 
 
-            Dibujar(H, discos,movimientos);
+            Dibujar(H, discos, movimientos);
             return (H);
         }
         public static Boolean Ganar(int[,] H, int discos)
         {
-            for(int i = 0; i < discos; i++)
+            for (int i = 0; i < discos; i++)
             {
-               if(H[i,2] != (i + 1)) 
+                if (H[i, 2] != (i + 1))
                 {
                     return false;
                 }
@@ -246,7 +278,7 @@ namespace Torres_de_Hanoi
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             int optimo = (int)Math.Pow(2, discos) - 1;
-            
+
             Console.WriteLine("\n\n\t\t\t\t\t`7MM***YMM          `7MM    db             db       `7MM                `7MM                    OO   ");
             Console.WriteLine("\t\t\t\t\t  MM    `7            MM                              MM                  MM                    88   ");
             Console.WriteLine("\t\t\t\t\t  MM   d    .gP*Ya    MM  `7MM   ,p6*bo  `7MM    ,M**bMM   ,6*Yb.    ,M**bMM   .gP*Ya   ,pP*Ybd  ||  ");
@@ -255,12 +287,13 @@ namespace Torres_de_Hanoi
             Console.WriteLine("\t\t\t\t\t  MM       YM.    ,   MM    MM  YM.    ,   MM  `Mb    MM  8M   MM  `Mb    MM  YM.    ,  L.   I8  ,,  ");
             Console.WriteLine("\t\t\t\t\t.JMML.      `Mbmmd' .JMML..JMML. YMbmd'  .JMML. `Wbmd*MML.`Moo9^Yo. `Wbmd*MML. `Mbmmd'  M9mmmP'  db  ");
 
-            Console.WriteLine("\n\t\t\t\t\t\t\t\t\t"+ usuario + " hiciste: " + movimientos + " movimientos");
-            Console.WriteLine("\t\t\t\t\t\t\t\t\tEl minimo número de movimietos es: " + optimo);
+            Console.WriteLine("\n\t\t\t\t\t\t\t\t\t" + usuario + " hiciste: " + movimientos + " movimientos");
+            Console.WriteLine("\t\t\t\t\t\t\t\t\tEl mínimo número de movimietos es: " + optimo);
             Console.WriteLine("\t\t\t\t\t\t\t\t\tPresione enter...");
             Console.ReadLine();
 
-            if (movimientos == optimo) {
+            if (movimientos == optimo)
+            {
 
                 Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t           cccccccccccccc       ");
                 Console.WriteLine("\t\t\t\t\t\t\t\t\t           c ccccccccccc c      ");
@@ -271,7 +304,7 @@ namespace Torres_de_Hanoi
                 Console.WriteLine("\t\t\t\t\t\t\t\t\t           cccccccccccccc       ");
                 Console.WriteLine("\t\t\t\t\t\t\t\t\t           cccccccccccccc       ");
 
-                Console.WriteLine("\n\t\t\t\t\t\t\t\t\t!Felicidades " + usuario + " lograste un buen puntuaje!");
+                Console.WriteLine("\n\t\t\t\t\t\t\t\t\t!Felicidades " + usuario + ", lograste un buen puntuaje!");
                 Console.ReadLine();
 
                 int guardar;
@@ -279,14 +312,14 @@ namespace Torres_de_Hanoi
                 guardar = int.Parse(Console.ReadLine());
                 if (guardar == 1)
                 {
-                    string linea = usuario + "\tMovimientos: " + movimientos + "\tDiscos: "+ discos + "\tFecha: " +  DateTime.Today;
+                    string linea = usuario + "\tMovimientos: " + movimientos + "\tDiscos: " + discos + "\tFecha: " + DateTime.Today;
                     using (StreamWriter sw = File.AppendText("marcador.txt"))
                     {
                         sw.WriteLine(linea);
                         sw.Close();
                     }
 
-                    Console.WriteLine("\t\t\t\t\t\t\t\t\tSe ha guardado exitosamente");
+                    Console.WriteLine("\t\t\t\t\t\t\t\t\tSe ha guardado exitosamente.");
                     Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\tPresione enter...");
                     Console.ReadLine();
                 }
@@ -294,14 +327,14 @@ namespace Torres_de_Hanoi
                 {
                     Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\tPresione enter...");
                     Console.ReadLine();
-                }                
+                }
             }
             Menu(usuario);
         }
         public static void Marcador(string ususario)
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
 
             Console.WriteLine("\n\n\t\t\t\t\t                                                           ,,                              ccccccccccccccc");
             Console.WriteLine("\t\t\t\t\t  7MMM.    ,MMF                                          `7MM                             c  ccccccccccc  c");
@@ -327,4 +360,4 @@ namespace Torres_de_Hanoi
         }
 
     }
-} 
+}
