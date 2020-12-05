@@ -1,3 +1,5 @@
+/*Jose Francisco Estañon Miranda 70243
+  Leslie Andrea Anguiano Resendez 00000*/
 using System;
 using System.Linq;
 
@@ -97,24 +99,23 @@ namespace Torres_de_Hanoi
                 {
                     if (H[j, i] != 0)
                     {
-                        for (int k = 0; k < (discos - H[j,i]); k++)
-                        {
-                            Console.Write(" ");
-                        }
-                        string pieza = string.Concat(Enumerable.Repeat(H[j, i], 2 * (H[j, i] + 1) - 1));
+                        for (int k = 0; k < (discos - H[j,i]); k++) { Console.Write(" "); } // Separacion izquierda
+
+                        string pieza = string.Concat(Enumerable.Repeat(H[j, i], 2 * (H[j, i] + 1) - 1)); // Numeros
                         Console.Write(pieza);
+
+                        int faltante = (2 * discos) - (((discos - H[j, i]) + (2 * (H[j, i] + 1) - 1))); // Completa la forma
+                        for (int k = 0; k < faltante + 1; k++) { Console.Write(" "); }
                     }
 
-                    else {
-                        for (int k = 0; k < (discos - H[j,i]); k++)
-                        {
-                            Console.Write("  ");
-                        }
+                    else
+                    {
+                        for (int k = 0; k < 2 * discos + 1; k++) { Console.Write(" "); } // En caso de que no haya nada 
                     }
                 }
                 Console.Write("\n");
             }
-            Console.WriteLine(string.Concat(Enumerable.Repeat("-", 2 * (3*discos + 1) - 1)));
+            Console.WriteLine(string.Concat(Enumerable.Repeat("-", 2 * (3*discos + 1))));
         }
         public static int[,] Nuevo(int discos)
         {
