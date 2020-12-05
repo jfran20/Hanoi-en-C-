@@ -1,7 +1,8 @@
-﻿/*Jose Francisco Estañon Miranda 70243
-  Leslie Andrea Anguiano Reséndez 00000*/
+/*Jose Francisco Estañón Miranda 70243
+  Leslie Andrea Anguiano Reséndez 70930*/
 using System;
 using System.Linq;
+using System.IO;
 
 namespace Torres_de_Hanoi
 {
@@ -13,8 +14,13 @@ namespace Torres_de_Hanoi
 
         public static void Menu()
         {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+
             int opc = 2;
+            string usuario = "";
             Console.Clear();
+            
             Console.WriteLine("\n\n\t\tMMP**MM**YMM                                                       `7MM               `7MMF'  `7MMF'                                    db  ");
             Console.WriteLine("\t\tP'   MM   `7                                                         MM                 MM      MM                                          ");
             Console.WriteLine("\t\t     MM       ,pW*Wq.  `7Mb,od8 `7Mb,od8  .gP*Ya  ,pP*Ybd       ,M**bMM   .gP*Ya        MM     MM   ,6*Yb.     `7MMpMMMb.   ,pW*Wq.   `7MM  ");
@@ -24,33 +30,38 @@ namespace Torres_de_Hanoi
             Console.WriteLine("\t\t   .JMML.     `Ybmd9'  .JMML.   .JMML.    `Mbmmd' M9mmmP'      `Wbmd*MML. `Mbmmd'     .JMML.  .JMML.`Moo9 ^ Yo..JMML  JMML. `Ybmd9'   .JMML.");
 
 
-            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t\tBienvenido");
+            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t\t¡Bienvenido!");
             Console.WriteLine("\n\t\t\t\t\t\t1.- Instrucciones\t2.-Nueva Partida\t3.-Marcador\t4.-Salir");
             try
             {
                 opc = int.Parse(Console.ReadLine());
             }
             catch (Exception) { Menu(); }
-            switch (opc){
+            switch (opc)
+            {
                 case 1:
-                    try 
+                    try
                     {
                         Instrucciones();
-                    }catch (Exception Ex) { Menu(); }
+                    }
+                    catch (Exception Ex) { Menu(); }
                     break;
 
                 case 2:
                     try
                     {
-                        Console.WriteLine("\t\t\t¿Con cuántos discos quieres jugar?");
+                        Console.WriteLine("\t\t\tIngresa un nombre de usuario para que tus movimientos se guarden en el marcador");
+                        usuario = Console.ReadLine();
+                        Console.WriteLine("\t\t\t¿Con cuántos discos quieres jugar, " + usuario + "?");
                         Console.WriteLine("\t\t\tFunciono mejor con valores menores a 10: ");
                         int discos = int.Parse(Console.ReadLine());
 
-                        if(discos == 0) { Console.WriteLine("\t\t\tReally?     -_- "); }
+                        if (discos == 0) { Console.WriteLine("\t\t\tReally?     -_- "); }
 
-                        while(discos > 20) { 
-                            Console.WriteLine("\t\t\tPor favor se razonable, esto dificultaria visualizarlo y ejecutarlo");
-                            Console.WriteLine("\t\t\tIntentalo denuevo: ");
+                        while (discos > 20)
+                        {
+                            Console.WriteLine("\t\t\tPor favor se razonable, esto dificultaría visualizarlo y ejecutarlo");
+                            Console.WriteLine("\t\t\tInténtalo de nuevo: ");
                             discos = int.Parse(Console.ReadLine());
                         }
 
@@ -62,24 +73,26 @@ namespace Torres_de_Hanoi
                         do
                         {
                             movimientos++;
-                            Partida = Juego(Partida, discos,movimientos);                 
+                            Partida = Juego(Partida, discos, movimientos);
                             ganar = Ganar(Partida, discos);
                         } while (ganar == false);
                         Felicidades(movimientos, discos);
 
                     }
-                    catch (Exception) {
-                        Console.WriteLine("\t\t\tVaya algo salio mal... De vuelta al Menu");
-                        Console.WriteLine("Presiona enter...");
+                    catch (Exception)
+                    {
+                        Console.WriteLine("\t\t\tVaya algo salió mal... De vuelta al Menú");
+                        Console.WriteLine("\tPresiona enter...");
                         Console.ReadLine();
-                        Menu(); }
+                        Menu();
+                    }
                     break;
 
                 case 3:
                     try
                     {
                         Console.WriteLine("Proximamente...");
-                        Console.WriteLine("Presiona enter...");
+                        Console.WriteLine("\tPresiona enter...");
                         Console.ReadLine();
                         Menu();
                     }
@@ -103,19 +116,19 @@ namespace Torres_de_Hanoi
             Console.WriteLine("\t\t\t\t\t  222 ");
             Console.WriteLine("\t\t\t\t\t 33333");
             Console.WriteLine("\t\t\t\t\t---|-------|-------|---");
-            Console.WriteLine("\nPresione enter...");
+            Console.WriteLine("\n\tPresione enter...");
             Console.ReadLine();
 
             Console.WriteLine("\n\n\t\tEl objetivo del juego es trasladar la pila a otro de los postes siguiendo ciertas \n\t\treglas, como que NO SE PUEDE COLOCAR UN DISCO MÁS GRANDE ENCIMA DE UN DISCO MÁS PEQUEÑO. ");
-            Console.WriteLine("\nPresione enter...");
+            Console.WriteLine("\n\tPresione enter...");
             Console.ReadLine();
 
-            Console.WriteLine("\n\t\tEl juego te pedira primero la columna de origen y luego la columna de destino");
-            Console.WriteLine("\nPresione enter...");
+            Console.WriteLine("\n\t\tEl juego te pedirá primero la columna de origen y luego la columna de destino");
+            Console.WriteLine("\n\ttPresione enter...");
             Console.ReadLine();
 
-            Console.WriteLine("\nEso seria todo, ¿listo para jugar?");
-            Console.WriteLine("\nPresione enter...");
+            Console.WriteLine("\nEso sería todo, ¿listo para jugar?");
+            Console.WriteLine("\n\tPresione enter...");
             Menu();
         }
         public static void Dibujar(int[,] H, int discos, int movimientos)
@@ -127,7 +140,7 @@ namespace Torres_de_Hanoi
                 {
                     if (H[j, i] != 0)
                     {
-                        for (int k = 0; k < (discos - H[j,i]); k++) { Console.Write(" "); } // Separacion izquierda
+                        for (int k = 0; k < (discos - H[j, i]); k++) { Console.Write(" "); } // Separacion izquierda
 
                         string pieza = string.Concat(Enumerable.Repeat(H[j, i], 2 * (H[j, i] + 1) - 1)); // Numeros
                         Console.Write(pieza);
@@ -143,17 +156,17 @@ namespace Torres_de_Hanoi
                 }
                 Console.Write("\n");
             }
-            Console.WriteLine(string.Concat(Enumerable.Repeat("-", 2 * (3*discos + 1))));
+            Console.WriteLine(string.Concat(Enumerable.Repeat("-", 2 * (3 * discos + 1))));
         }
         public static int[,] Nuevo(int discos)
         {
-            int[,] H = new int[discos,3];
+            int[,] H = new int[discos, 3];
 
             for (int j = 0; j < 3; j++)
             {
                 for (int i = 0; i < discos; i++)
                 {
-                   if(j == 0)
+                    if (j == 0)
                     {
                         H[i, j] = i + 1;
                     }
@@ -162,11 +175,11 @@ namespace Torres_de_Hanoi
             }
             return (H);
         }
-        public static int[,] Juego(int[,]H, int discos, int movimientos)
+        public static int[,] Juego(int[,] H, int discos, int movimientos)
         {
-            Console.WriteLine("\tColumna de origen: ");
+            Console.WriteLine("Columna de origen: ");
             int C_orig = int.Parse(Console.ReadLine()) - 1;
-            Console.WriteLine("\tColumna de destino: ");
+            Console.WriteLine("Columna de destino: ");
             int C_dest = int.Parse(Console.ReadLine()) - 1;
 
 
@@ -207,57 +220,68 @@ namespace Torres_de_Hanoi
                     }
                     else if (i == (discos - 1)) // Si no encuentra nada sale *Evitar que cuente*
                     {
-                        Console.WriteLine("En esa columna no hay nada! ");
+                        Console.WriteLine("¡En esa columna no hay nada! ");
                         break;
                     }
                 }
             }
-            else { Console.WriteLine("\t\t\t No tiene mucho sentido mover a la misma columna");}
+            else { Console.WriteLine("\t\t\t No tiene mucho sentido mover a la misma columna..."); }
             // ** termina logica del juego ** 
 
-            Dibujar(H, discos,movimientos);
+            Dibujar(H, discos, movimientos);
             return (H);
         }
         public static Boolean Ganar(int[,] H, int discos)
         {
-            for(int i = 0; i < discos; i++)
+            for (int i = 0; i < discos; i++)
             {
-               if(H[i,2] != (i + 1)) 
+                if (H[i, 2] != (i + 1))
                 {
                     return false;
                 }
             }
             return true;
         }
+
+
         public static void Felicidades(int movimientos, int discos)
         {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             int optimo = (int)Math.Pow(2, discos) - 1;
-            
-            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t¡Lo lograste!");
-            Console.WriteLine("Presione enter...");
+
+            Console.WriteLine("\n\n\t\t\t\t   `7MM***YMM          `7MM    db             db       `7MM                `7MM                     OO   ");
+            Console.WriteLine("\t\t\t\t     MM    `7            MM                              MM                  MM                     88   ");
+            Console.WriteLine("\t\t\t\t     MM   d    .gP*Ya    MM  `7MM   ,p6*bo  `7MM    ,M**bMM   ,6*Yb.    ,M**bMM   .gP*Ya   ,pP*Ybd  ||  ");
+            Console.WriteLine("\t\t\t\t     MM**MM   ,M'   Yb   MM    MM  6M'  OO    MM, AP     MM  8)   MM  ,AP    MM, M'    Yb  8I   `*  ||  ");
+            Console.WriteLine("\t\t\t\t     MM   Y   8M******   MM    MM  8M         MM  8MI    MM   ,pm9MM  8MI    MM  8M******  `YMMMa.  `'  ");
+            Console.WriteLine("\t\t\t\t     MM       YM.    ,   MM    MM  YM.    ,   MM  `Mb    MM  8M   MM  `Mb    MM  YM.    ,  L.   I8  ,,  ");
+            Console.WriteLine("\t\t\t\t   .JMML.      `Mbmmd' .JMML..JMML. YMbmd'  .JMML. `Wbmd*MML.`Moo9^Yo. `Wbmd*MML. `Mbmmd'  M9mmmP'  db  ");
+
+            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t   ¡Lo lograste!");
+
+            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t       Hiciste: " + movimientos + " movimientos");
+            Console.WriteLine("\n\n\t\t\t\t\t\t\t        El mínimo número de movimietos es: " + optimo);
+            Console.WriteLine("\tPresione enter...");
             Console.ReadLine();
 
-            Console.WriteLine("\t\t\t\t\t\t\t\t\tHiciste: " + movimientos + " movimientos");
-            Console.WriteLine("Presione enter...");
-            Console.ReadLine();
-         
-            Console.WriteLine("\t\t\t\t\t\t\t\t\tEl minimo número de movimietos es: " + optimo);
-            Console.WriteLine("Presione enter...");
-            Console.ReadLine();
+            if (movimientos == optimo)
+            {
 
-            if (movimientos == optimo) {
-                Console.WriteLine("\t\t\t\t!Felicidades lograste un buen puntuaje!");
+                Console.WriteLine("\n\n\t\t\t\t\t\t\t\t           cccccccccccccc       ");
+                Console.WriteLine("\t\t\t\t\t\t\t\t           c ccccccccccc c      ");
+                Console.WriteLine("\t\t\t\t\t\t\t\t         c    ccccccccc    c    ");
+                Console.WriteLine("\t\t\t\t\t\t\t\t            c  ccccccc  c       ");
+                Console.WriteLine("\t\t\t\t\t\t\t\t                cccc            ");
+                Console.WriteLine("\t\t\t\t\t\t\t\t                 cc             ");
+                Console.WriteLine("\t\t\t\t\t\t\t\t           cccccccccccccc       ");
+                Console.WriteLine("\t\t\t\t\t\t\t\t           cccccccccccccc       ");
+
+                Console.WriteLine("\n\t\t\t\t\t\t\t      !Felicidades, lograste un buen puntuaje!");
                 Console.ReadLine();
 
-                Console.WriteLine("\n\n\t\t`7MM***YMM          `7MM    db             db       `7MM                `7MM                    OO   ");
-                Console.WriteLine("\t\t  MM    `7            MM                              MM                  MM                    88   ");
-                Console.WriteLine("\t\t  MM   d    .gP*Ya    MM  `7MM   ,p6*bo  `7MM    ,M**bMM   ,6*Yb.    ,M**bMM   .gP*Ya   ,pP*Ybd  ||  ");
-                Console.WriteLine("\t\t  MM**MM   ,M'   Yb   MM    MM  6M'  OO    MM, AP     MM  8)   MM  ,AP    MM, M'    Yb  8I   `*  ||  ");
-                Console.WriteLine("\t\t  MM   Y   8M******   MM    MM  8M         MM  8MI    MM   ,pm9MM  8MI    MM  8M******  `YMMMa.  `'  ");
-                Console.WriteLine("\t\t  MM       YM.    ,   MM    MM  YM.    ,   MM  `Mb    MM  8M   MM  `Mb    MM  YM.    ,  L.   I8  ,,  ");
-                Console.WriteLine("\t\t.JMML.      `Mbmmd' .JMML..JMML. YMbmd'  .JMML. `Wbmd*MML.`Moo9^Yo. `Wbmd*MML. `Mbmmd'  M9mmmP'  db  ");
-               
-                Console.WriteLine("\n\nPresione enter...");
+                
+
+                Console.WriteLine("\n\n\tPresione enter...");
                 Console.ReadLine();
             }
 
@@ -265,7 +289,6 @@ namespace Torres_de_Hanoi
             Menu();
         }
 
-        
 
     }
 }
