@@ -14,8 +14,18 @@ namespace Torres_de_Hanoi
             int opc;
             Console.Clear();
             // Aqui iria un titulo bien padre así tipo hanoi 
-            Console.WriteLine("Bienvenido a torres_de_hanoi.exe"); 
-            Console.WriteLine("1.- Instrucciones\t2.-Nueva Partida\t3.-Marcador\t4.-Salir");
+
+            Console.WriteLine("\n\n\t\tMMP**MM**YMM                                                       `7MM               `7MMF'  `7MMF'                                    db  ");
+            Console.WriteLine("\t\tP'   MM   `7                                                         MM                 MM      MM                                          ");
+            Console.WriteLine("\t\t     MM       ,pW*Wq.  `7Mb,od8 `7Mb,od8  .gP*Ya  ,pP*Ybd       ,M**bMM   .gP*Ya        MM     MM   ,6*Yb.     `7MMpMMMb.   ,pW*Wq.   `7MM  ");
+            Console.WriteLine("\t\t     MM      6W'   `Wb   MM' *'   MM' *' ,M'   Yb 8I   `*     ,AP    MM  ,M'   Yb       MMmmmmmmMM  8)   MM      MM    MM  6W'   `Wb    MM  ");
+            Console.WriteLine("\t\t     MM      8M     M8   MM       MM     8M****** `YMMMa.     8MI    MM  8M******       MM      MM   ,pm9MM      MM    MM  8M     M8    MM  ");
+            Console.WriteLine("\t\t     MM      YA.   ,A9   MM       MM     YM.    , L.   I8     `Mb    MM  YM.    ,       MM      MM  8M   MM      MM    MM  YA.   ,A9    MM  ");
+            Console.WriteLine("\t\t   .JMML.     `Ybmd9'  .JMML.   .JMML.    `Mbmmd' M9mmmP'      `Wbmd*MML. `Mbmmd'     .JMML.  .JMML.`Moo9 ^ Yo..JMML  JMML. `Ybmd9'   .JMML.");
+
+
+            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t\tBienvenido");
+            Console.WriteLine("\n\t\t\t\t\t\t1.- Instrucciones\t2.-Nueva Partida\t3.-Marcador\t4.-Salir");
             opc = int.Parse(Console.ReadLine());
 
             switch (opc){
@@ -23,80 +33,89 @@ namespace Torres_de_Hanoi
                     try 
                     {
                         Instrucciones();
-                    }catch (Exception Ex) { Console.WriteLine("Oooops hubo un error " + Ex.Message); }
+                    }catch (Exception Ex) { Console.WriteLine("Oooops hubo un error: " + Ex.Message); }
                     break;
                 case 2:
                     try
                     {
                         Console.WriteLine("¿Con cuántos discos quieres jugar? ");
                         int discos = int.Parse(Console.ReadLine());
-                        Dibujar(Nuevo(discos), discos);
+                        int[,] Partida = Nuevo(discos);
+                        Dibujar(Partida, discos);
+                        bool ganar;
+                        do
+                        {
+                            Partida = Juego(Partida, discos);
+                            ganar = Ganar(Partida, discos);
+                        } while (ganar == false);
+                        Felicidades();
 
-                        
                     }
-                    catch (Exception Ex) { Console.WriteLine("Oooops hubo un error " + Ex.Message); }
+                    catch (Exception Ex) { Console.WriteLine("Oooops hubo un error: " + Ex.Message); }
                     break;
                 case 3:
                     try
                     {
-                        
+                        Console.WriteLine("Proximamente...");
                     }
-                    catch (Exception Ex) { Console.WriteLine("Oooops hubo un error " + Ex.Message); }
+                    catch (Exception Ex) { Console.WriteLine("Oooops hubo un error: " + Ex.Message); }
                     break;
                 case 4:
                     try
                     {
                         Environment.Exit(0);
                     }
-                    catch (Exception Ex) { Console.WriteLine("Oooops hubo un error " + Ex.Message); }
+                    catch (Exception Ex) { Console.WriteLine("Oooops hubo un error: " + Ex.Message); }
                     break;
             }
 
         }
         public static void Instrucciones()
         {
-            //Podemos escribir todo aqui o escribir un .txt y que lo vaya leyendo 
 
-            Console.WriteLine("El juego consiste...");
-            Console.WriteLine("Presione cualquier tecla...");
+            Console.WriteLine("\n\t\tEl juego consiste en un número de discos perforados de radio creciente que se apilan \n\t\tinsertándose en uno de los tres postes fijados a un tablero. ");
+            Console.WriteLine("\n\t\t\t\t\t   1  ");
+            Console.WriteLine("\t\t\t\t\t  222 ");
+            Console.WriteLine("\t\t\t\t\t 33333");
+            Console.WriteLine("\t\t\t\t\t---|-------|-------|---");
+            Console.WriteLine("\nPresione enter...");
             Console.ReadLine();
-            Console.WriteLine("Eso seria todo");
-            Console.WriteLine("Presione cualquier tecla...");
+
+            Console.WriteLine("\n\n\t\tEl objetivo del juego es trasladar la pila a otro de los postes siguiendo ciertas \n\t\treglas, como que NO SE PUEDE COLOCAR UN DISCO MÁS GRANDE ENCIMA DE UN DISCO MÁS PEQUEÑO. ");
+            Console.WriteLine("\nPresione cualquier tecla...");
+            Console.ReadLine();
+            Console.WriteLine("\nEso seria todo, ¿listo para jugar?");
+            Console.WriteLine("\nPresione enter...");
             Menu();
         }
-
         public static void Dibujar(int[,] H, int discos)
         {
-            // Elementos Visulaes  
-            string suelo =   ("---|-------|-------|---");
-            /* En primera columna Apoyo Visual 
-            "  1  "
-            " 222 "
-            "33333"
-            "---|-------|-------|---"
-             */
-
-            // Solo sirve para numeros de 1 digito 
-
+            Console.WriteLine("\nMovimientos: " + "\n");
             for (int j = 0; j < discos; j++)
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    if (H[1, i] != 0)
+                    if (H[j, i] != 0)
                     {
-                        for (int k = 0; k < i; k++)
+                        for (int k = 0; k < (discos - H[j,i]); k++)
                         {
-                            Console.Write("\t");
+                            Console.Write(" ");
                         }
-                        string pieza = string.Concat(Enumerable.Repeat(j + 1, 2 * (j + 1) - 1));
-                        Console.Write(pieza + "\n");
+                        string pieza = string.Concat(Enumerable.Repeat(H[j, i], 2 * (H[j, i] + 1) - 1));
+                        Console.Write(pieza);
+                    }
+
+                    else {
+                        for (int k = 0; k < (discos - H[j,i]); k++)
+                        {
+                            Console.Write("  ");
+                        }
                     }
                 }
+                Console.Write("\n");
             }
-            Console.WriteLine(suelo);
-
+            Console.WriteLine(string.Concat(Enumerable.Repeat("-", 2 * (3*discos + 1) - 1)));
         }
-
         public static int[,] Nuevo(int discos)
         {
             int[,] H = new int[discos,3];
@@ -112,29 +131,14 @@ namespace Torres_de_Hanoi
                     else { H[i, j] = 0; }
                 }
             }
-
-            /* Parte de prueba remover despues
-            for (int i = 0; i < discos; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    Console.Write(H[i, j]);
-                }
-                Console.WriteLine();
-            }
-            */
             return (H);
-
-
-
         }
-
         public static int[,] Juego(int[,]H, int discos)
         {
             Console.WriteLine("Columna: ");
-            int C_orig = int.Parse(Console.ReadLine());
+            int C_orig = int.Parse(Console.ReadLine()) - 1;
             Console.WriteLine(" a: ");
-            int C_dest = int.Parse(Console.ReadLine());
+            int C_dest = int.Parse(Console.ReadLine()) - 1;
 
             // *** Logica del juego ***
 
@@ -142,15 +146,16 @@ namespace Torres_de_Hanoi
             {
                 if (H[i, C_orig] != 0)                                                  // Busca el Primer disco 
                 {
-                    for (int j = discos; j >= 0; j--)                                   // Itera en la columna destino de abajo hacia arriba
+                    for (int j = discos - 1; j >= 0; j--)                               // Itera en la columna destino de abajo hacia arriba
                     {
                         if (H[j, C_dest] == 0)                                          // Busca un espacio libre 
                         {
-                            if(j<discos)                                                // Si no es el unico disco
+                            if (j < discos - 1)                                         // Si no es el unico disco
                             {
-                                if (H[i, C_orig] > H[j + 1, C_dest])                     // Compara con el de abajo 
+                                if (H[i, C_orig] > H[j + 1, C_dest])                    // Compara con el de abajo 
                                 {
-                                    Console.WriteLine("Ese es un movimiento ilegal");   // Muestra si se puede
+                                    Console.WriteLine("Ese es un movimiento ilegal");   // Muestra si se puede *Evitar que cuente
+                                    break;
                                 }
                                 else                                                    // Realiza el cambio
                                 {
@@ -159,16 +164,54 @@ namespace Torres_de_Hanoi
                                     break;
                                 }
                             }
+                            else
+                            {
+                                H[j, C_dest] = H[i, C_orig];
+                                H[i, C_orig] = 0;
+                                break;
+                            }
                         }
                     }
+                    break;
                 }
-                else {Console.WriteLine("En esta columna no hay nada"); }               // Si no encuentra nada vuelve a llamarse
-                break;
-            }
-            // ** termina logica del juego ** 
+                else if (i == (discos - 1)) // Si no encuentra nada sale * Evitar que cuente*
+                {
+                    Console.WriteLine("En esa columna no hay nada! ");
+                    break;
+                }  
+                  // ** termina logica del juego ** 
+            }            
+            Dibujar(H, discos);
             return (H);
         }
+        public static Boolean Ganar(int[,] H, int discos)
+        {
+            for(int i = 0; i < discos; i++)
+            {
+               if(H[i,2] != (i + 1)) 
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public static void Felicidades()
+        {
+            Console.WriteLine("\n\n\t\t`7MM***YMM          `7MM    db             db       `7MM                `7MM                    OO   ");
+            Console.WriteLine("\t\t  MM    `7            MM                              MM                  MM                    88   ");
+            Console.WriteLine("\t\t  MM   d    .gP*Ya    MM  `7MM   ,p6*bo  `7MM    ,M**bMM   ,6*Yb.    ,M**bMM   .gP*Ya   ,pP*Ybd  ||  ");
+            Console.WriteLine("\t\t  MM**MM   ,M'   Yb   MM    MM  6M'  OO    MM, AP     MM  8)   MM  ,AP    MM, M'    Yb  8I   `*  ||  ");
+            Console.WriteLine("\t\t  MM   Y   8M******   MM    MM  8M         MM  8MI    MM   ,pm9MM  8MI    MM  8M******  `YMMMa.  `'  ");
+            Console.WriteLine("\t\t  MM       YM.    ,   MM    MM  YM.    ,   MM  `Mb    MM  8M   MM  `Mb    MM  YM.    ,  L.   I8  ,,  ");
+            Console.WriteLine("\t\t.JMML.      `Mbmmd' .JMML..JMML. YMbmd'  .JMML. `Wbmd*MML.`Moo9^Yo. `Wbmd*MML. `Mbmmd'  M9mmmP'  db  ");
+
+            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t¡Lo lograste!");
+            Console.WriteLine("Presione enter...");
+            Console.ReadLine();
+            Menu();
+        }
+
         
 
-    }            
+    }
 }
