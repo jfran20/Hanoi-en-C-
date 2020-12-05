@@ -1,4 +1,4 @@
-/*Jose Francisco Estañón Miranda 70243
+﻿/*Jose Francisco Estañón Miranda 70243
   Leslie Andrea Anguiano Reséndez 70930*/
 using System;
 using System.Linq;
@@ -18,7 +18,6 @@ namespace Torres_de_Hanoi
             Console.ForegroundColor = ConsoleColor.DarkCyan;
 
             int opc = 2;
-            string usuario = "";
             Console.Clear();
             
             Console.WriteLine("\n\n\t\tMMP**MM**YMM                                                       `7MM               `7MMF'  `7MMF'                                    db  ");
@@ -42,6 +41,7 @@ namespace Torres_de_Hanoi
                 case 1:
                     try
                     {
+                        Console.Clear();
                         Instrucciones();
                     }
                     catch (Exception Ex) { Menu(); }
@@ -50,9 +50,8 @@ namespace Torres_de_Hanoi
                 case 2:
                     try
                     {
-                        Console.WriteLine("\t\t\tIngresa un nombre de usuario para que tus movimientos se guarden en el marcador");
-                        usuario = Console.ReadLine();
-                        Console.WriteLine("\t\t\t¿Con cuántos discos quieres jugar, " + usuario + "?");
+                
+                        Console.WriteLine("\t\t\t¿Con cuántos discos quieres jugar?");
                         Console.WriteLine("\t\t\tFunciono mejor con valores menores a 10: ");
                         int discos = int.Parse(Console.ReadLine());
 
@@ -91,7 +90,7 @@ namespace Torres_de_Hanoi
                 case 3:
                     try
                     {
-                        Console.WriteLine("Proximamente...");
+                        Marcador();
                         Console.WriteLine("\tPresiona enter...");
                         Console.ReadLine();
                         Menu();
@@ -281,14 +280,49 @@ namespace Torres_de_Hanoi
 
                 
 
+
                 Console.WriteLine("\n\n\tPresione enter...");
                 Console.ReadLine();
             }
 
+            AgregarInfo(movimientos);
             Console.ReadLine();
             Menu();
         }
 
+        public static void Marcador()
+        {
+            LeerArchivo();
+        }
 
+        public static void AgregarInfo(int _movimientos)//se va a agregar el número que nos pasen al .txt
+        {
+            string archivo = "marcador.txt";
+            string usuario = "";
+
+            Console.WriteLine("\t\t\tIngresa un nombre de usuario para que tus movimientos se guarden en el marcador");
+            usuario = Console.ReadLine();
+
+            using (StreamWriter sw = File.AppendText(archivo))//el "AppendText" no sobre escribe 
+            {
+                sw.WriteLine(usuario + "..................." + _movimientos );
+                
+                sw.Close();
+            }
+        }
+
+        public static void LeerArchivo()
+        {
+            string archivo = "marcador.txt";
+            string linea = "";
+
+            using (StreamReader sr = new StreamReader(archivo))
+            {
+                
+                linea = sr.ReadToEnd();
+                Console.WriteLine(linea);
+                sr.Close();
+            }
+        }
     }
 }
